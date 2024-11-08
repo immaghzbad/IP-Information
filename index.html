@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>User IP Information</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #FFFFFF, #DDDDDD);
+            background-size: 200% 200%;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow-x: hidden;
+            user-select: none;
+            transition: background 1s ease;
+        }
+        .info-container {
+            width: 90%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(12px);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            color: #fff;
+            margin: 20px 0;
+            padding: 30px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .info-container h3 {
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #ffffff;
+            font-size: 24px;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+        .info-item:hover {
+            transform: scale(1.05);
+        }
+        .info-item i {
+            margin-right: 10px;
+            color: #FFE66D;
+        }
+        .img-flag {
+            width: 80px;
+            height: auto;
+            border-radius: 20%;
+            display: block;
+            margin: 0 auto 20px auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .footer-links {
+            margin-top: 20px;
+        }
+        .footer-links a {
+            color: #FFE66D;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: #FF6F61;
+        }
+        @media (max-width: 768px) {
+            .info-container {
+                width: 95%;
+            }
+        }
+        @media (max-width: 480px) {
+            .info-container h3 {
+                font-size: 20px;
+            }
+            .info-item {
+                font-size: 14px;
+            }
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.get("http://ip-api.com/json/", function(response) {
+                const countryCode = response.countryCode.toLowerCase();
+                const flagUrl = `https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/${countryCode}.svg`;
+                
+                const colors = {
+                    "us": ["#3C3B6E", "#B22234"],
+                    "de": ["#FFCE00", "#DD0000"],
+                    "fr": ["#0055A4", "#EF4135"],
+                    "jp": ["#BC002D", "#FFFFFF"],
+                    "br": ["#009C3B", "#FFDF00"],
+                    "in": ["#FF9933", "#138808"],
+                    "cn": ["#DE2910", "#FFDE00"],
+                    "ru": ["#0039A6", "#D52B1E"],
+                    "au": ["#00008B", "#FFCC00"],
+                    "ca": ["#FF0000", "#FFFFFF"],
+                    "gb": ["#00247D", "#CF142B"],
+                    "it": ["#008C45", "#F4F5F0"],
+                    "es": ["#AA151B", "#F1BF00"],
+                    "mx": ["#006847", "#CE1126"],
+                    "za": ["#007749", "#FFB612"],
+                    "kr": ["#C60C30", "#003478"],
+                    "ar": ["#74ACDF", "#FFFFFF"],
+                    "ng": ["#008753", "#FFFFFF"],
+                    "eg": ["#CE1126", "#F7E04A"],
+                    "id": ["#E00000", "#FFFFFF"],
+                    "tr": ["#E30A17", "#FFFFFF"],
+                    "sa": ["#006C35", "#FFFFFF"],
+                    "pk": ["#01411C", "#FFFFFF"],
+                    "nl": ["#21468B", "#FFFFFF"],
+                    "se": ["#005BAC", "#FECB00"],
+                    "ch": ["#D52B1E", "#FFFFFF"],
+                    "pl": ["#DC143C", "#FFFFFF"],
+                    "be": ["#FFD700", "#FF0000"],
+                    "gr": ["#0D5EAF", "#FFFFFF"],
+                    "no": ["#BA0C2F", "#00205B"],
+                    "fi": ["#002F6C", "#FFFFFF"],
+                    "dk": ["#C8102E", "#FFFFFF"],
+                    "ie": ["#169B62", "#FFFFFF"],
+                    "pt": ["#006600", "#FF0000"],
+                    "nz": ["#00247D", "#FFFFFF"],
+                    "il": ["#0038B8", "#FFFFFF"],
+                    "ua": ["#0057B7", "#FFD700"],
+                    "at": ["#ED2939", "#FFFFFF"],
+                    "hu": ["#477050", "#FFFFFF"],
+                    "ro": ["#002B7F", "#FCD116"],
+                    "cz": ["#D7141A", "#FFFFFF"],
+                    "bg": ["#00966E", "#FFFFFF"],
+                    "hr": ["#171796", "#EE1C25"],
+                    "rs": ["#C6363C", "#0C4076"],
+                    "sk": ["#0B4EA2", "#EE1C25"],
+                    "si": ["#0B4EA2", "#EE1C25"],
+                    "lt": ["#FDB913", "#007A33"],
+                    "lv": ["#9E3039", "#FFFFFF"],
+                    "ee": ["#0D5EAF", "#FFFFFF"],
+                    "lu": ["#00A1DE", "#FFFFFF"],
+                    "mt": ["#D52B1E", "#FFFFFF"],
+                    "cy": ["#F6A100", "#FFFFFF"],
+                    "is": ["#003DA5", "#FFFFFF"],
+                    "li": ["#00205B", "#C8102E"],
+                    "mc": ["#CE1126", "#FFFFFF"],
+                    "sm": ["#5EB6E4", "#FFFFFF"],
+                    "va": ["#FFD700", "#FFFFFF"],
+                    "ad": ["#002D72", "#FFD700"],
+                    "ir": ["#239F40", "#DA0000"],
+                    "th": ["#A51931", "#2D2A4A"],
+                    "my": ["#010066", "#CC0001"],
+                    "sg": ["#EF2B2D", "#FFFFFF"],
+                    "ph": ["#0038A8", "#CE1126"],
+                    "vn": ["#DA251D", "#FFFFFF"],
+                    "bd": ["#006A4E", "#F42A41"],
+                    "iq": ["#FFFFFF", "#CE1126"],
+                    "sy": ["#000000", "#FFFFFF"],
+                    "ae": ["#00732F", "#FFFFFF"],
+                    "qa": ["#8D1B3D", "#FFFFFF"],
+                    "bh": ["#DA291C", "#FFFFFF"],
+                    "om": ["#C8102E", "#FFFFFF"],
+                    "kw": ["#007A3D", "#FFFFFF"],
+                    "lb": ["#ED1C24", "#FFFFFF"],
+                    "jo": ["#007A3D", "#CE1126"],
+                    "ma": ["#C1272D", "#FFFFFF"],
+                    "dz": ["#006233", "#FFFFFF"],
+                    "tn": ["#E70013", "#FFFFFF"],
+                    "ly": ["#239F40", "#FFFFFF"],
+                    "ye": ["#CE1126", "#FFFFFF"],
+                    "sd": ["#007A3D", "#FFFFFF"],
+                    "et": ["#DA121A", "#FFFFFF"],
+                    "gh": ["#006B3F", "#FCD116"],
+                    "ke": ["#006C35", "#FFFFFF"],
+                    "ug": ["#FFCD00", "#000000"],
+                    "tz": ["#00A859", "#000000"],
+                    "ao": ["#DE2929", "#000000"],
+                    "mz": ["#007749", "#FFFFFF"],
+                    "zm": ["#E03C31", "#FFFFFF"],
+                    "zw": ["#FFD200", "#000000"],
+                    "mw": ["#D62612", "#FFFFFF"],
+                    "mg": ["#007E3A", "#FFFFFF"],
+                    "cd": ["#007FFF", "#FFD700"],
+                    "cm": ["#007A5E", "#EC1C24"],
+                    "sn": ["#00853F", "#FDEF42"],
+                    "ml": ["#14B53A", "#FCD116"],
+                    "ci": ["#F77F00", "#FFFFFF"],
+                    "bf": ["#EF2B2D", "#FFFFFF"],
+                    "ne": ["#E05206", "#FFFFFF"],
+                    "sl": ["#1EB53A", "#FFFFFF"],
+                    "lr": ["#BF0A30", "#FFFFFF"]
+                };
+                
+                const countryColors = colors[countryCode] || ["#FFFFFF", "#DDDDDD"];
+                
+                $('body').css('background', `linear-gradient(135deg, ${countryColors[0]}, ${countryColors[1]})`);
+                
+                $('#ipInfo').html(`
+                    <img src="${flagUrl}" alt="Country Flag" class="img-flag">
+                    <h3><i class="fas fa-globe"></i> Detailed IP Information</h3>
+                    <div class="info-item"><i class="fas fa-network-wired"></i><strong>IP:</strong> ${response.query}</div>
+                    <div class="info-item"><i class="fas fa-city"></i><strong>City:</strong> ${response.city}</div>
+                    <div class="info-item"><i class="fas fa-map-marker-alt"></i><strong>Region:</strong> ${response.regionName}</div>
+                    <div class="info-item"><i class="fas fa-flag"></i><strong>Country:</strong> ${response.country}</div>
+                    <div class="info-item"><i class="fas fa-building"></i><strong>ISP:</strong> ${response.isp}</div>
+                    <div class="info-item"><i class="fas fa-compass"></i><strong>Latitude:</strong> ${response.lat}</div>
+                    <div class="info-item"><i class="fas fa-compass"></i><strong>Longitude:</strong> ${response.lon}</div>
+                    <div class="info-item"><i class="fas fa-clock"></i><strong>Timezone:</strong> ${response.timezone}</div>
+                    <div class="info-item"><i class="fas fa-sim-card"></i><strong>AS:</strong> ${response.as}</div>
+                    <div class="info-item"><i class="fas fa-globe-europe"></i><strong>Organization:</strong> ${response.org}</div>
+                    <div class="footer-links">
+                        <p>Created by <strong>I'm 𝐄𝐫𝐟𝐚𝐧</strong></p>
+                        <a href="https://github.com/immaghzbad" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="https://t.me/powersigma" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
+                    </div>
+                `);
+            }, "json");
+        });
+    </script>
+</head>
+<body>
+    <div class="info-container" id="ipInfo"></div>
+</body>
+</html>
